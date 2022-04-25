@@ -45,7 +45,7 @@
 		<dependency>
 			<groupId>com.fci</groupId>
 			<artifactId>icore-parser</artifactId>
-			<version>0.0.3</version>
+			<version>0.1.4</version>
 			<!-- <scope>system</scope>
 			<systemPath>${project.basedir}/lib/icore-parser-0.0.1-jar-with-dependencies.jar</systemPath> -->
 		</dependency>
