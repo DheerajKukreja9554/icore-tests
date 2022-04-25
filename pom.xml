@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.liberin</groupId>
 	<artifactId>test</artifactId>
-	<version>0.1.3</version>
+	<version>0.1.4</version>
 	<name>test</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -38,12 +38,18 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>4.1</version>
+		</dependency>
+		<dependency>
 			<groupId>com.fci</groupId>
 			<artifactId>icore-parser</artifactId>
 			<version>0.0.3</version>
 			<!-- <scope>system</scope>
 			<systemPath>${project.basedir}/lib/icore-parser-0.0.1-jar-with-dependencies.jar</systemPath> -->
 		</dependency>
+
 		<!-- <dependency>
 			<groupId>com.liberin</groupId>
 			<artifactId>icore-parser</artifactId>
