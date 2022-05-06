@@ -37,15 +37,22 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
 			<version>4.1</version>
+		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.9.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.fci</groupId>
 			<artifactId>icore-parser</artifactId>
-			<version>0.1.5</version>
+			<version>0.1.6</version>
 			<!-- <scope>system</scope>
 			<systemPath>${project.basedir}/lib/icore-parser-0.0.1-jar-with-dependencies.jar</systemPath> -->
 		</dependency>

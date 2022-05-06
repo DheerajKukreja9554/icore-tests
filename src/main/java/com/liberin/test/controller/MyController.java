@@ -1,21 +1,18 @@
 package com.liberin.test.controller;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import com.fci.icoreparser.MT940Converter;
-import com.liberin.test.entity.Student;
-import com.opencsv.bean.ColumnPositionMappingStrategy;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
+import com.fci.icoreparser.entity.ICoreMessage;
+import com.fci.icoreparser.service.ParserServiceImpl;
+import com.fci.icoreparser.swiftfin.SwiftFinParser;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
-
-// import com.fci.icoreparser.controller.ParseController;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,27 +35,36 @@ public class MyController {
         return answer;
     }
 
-    @GetMapping("/student")
-    public List<Student> getStudents(){
+    @GetMapping("/random")
+    public void random(){
 
-        // FileReader reader = new FileReader(file)
-        ColumnPositionMappingStrategy<Student> strategy = new ColumnPositionMappingStrategy<>();
-        strategy.setType(Student.class);
-        CsvToBean<Student> parser = null;
+        String text = "";
+        String file = "D:\\PROGRAMMING\\Liberin\\ICOREPARSER PROJECT\\icore-parser\\files\\Input files\\mt940_lst\\mt940_lst\\00470501559520220403.txt";
+
         try {
-            parser = new CsvToBeanBuilder<Student>(new FileReader("files/data.csv"))
-                                        .withType(Student.class)
-                                        .withMappingStrategy(strategy)
-                                        .build();
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+            text =new String(Files.readAllBytes(Paths.get(file)));
+        } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        return parser.parse();
+        StopWatch watch = new StopWatch();
+        watch.start();
+        ICoreMessage message = new ParserServiceImpl().createICoreMessage(text);
+        watch.stop();
+        System.out.println(message.getBody().size());
+        System.out.println(watch.getTime());
 
+        watch.reset();
+        watch.start();
+        String doc = new SwiftFinParser().createMT940Document(message);
+        watch.stop();
+        System.out.println("documented in "+ watch.getTime());
+
+        try (FileWriter writer = new FileWriter("random.swt1")) {
+            writer.write(text);
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
     }
 }
