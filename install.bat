@@ -1,1 +1,1 @@
-mvn install:install-file -Dfile="D:\PROGRAMMING\Liberin\ICOREPARSER PROJECT\icore-tests-master\lib\icore-parser-0.1.6-jar-with-dependencies.jar" -DgroupId=com.fci -DartifactId=icore-parser -Dversion=0.1.6 -Dpackaging=jar
+mvn install:install-file -Dfile="D:\PROGRAMMING\Liberin\ICOREPARSER PROJECT\icore-tests-master\lib\icore-parser-0.1.7-jar-with-dependencies.jar" -DgroupId=com.fci -DartifactId=icore-parser -Dversion=0.1.7 -Dpackaging=jar
