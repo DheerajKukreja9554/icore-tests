@@ -1,2 +1,6 @@
 com\liberin\test\controller\MyController.class
 com\liberin\test\TestApplication.class
+com\liberin\test\controller\TransactionsDao.class
+com\liberin\test\Sample$Track.class
+com\liberin\test\controller\MT940Transactions.class
+com\liberin\test\Sample.class

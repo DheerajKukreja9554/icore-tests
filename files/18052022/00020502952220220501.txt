@@ -1,0 +1,4 @@
+ind|last  geneartion  date|gen date|sol ID |currency |opening balance|A/c number|name|sender bic | receiverbic|mode  of  delivery - EMAIL, SWIFT,RACE, CAMT, SFP|email1|email2|email3|email4|email5|SFTP serevr IP URL|STF path |address|cust_id
+B/F|29-04-2022|30-04-2022|0002|INR|164391782,88|000205029522|ICICI BANK NODAL ACCOUNT - RAZORPAY SOFTWARE PRIVATE LIMITED|ICICINBBAXXX|ICICINBBXCTS|modeofdelivery|settlements@razorpay.com|x-finops@razorpay.com|shashank.tiwari@razorpay.com|ranjini.bs@razorpay.com|| | | |568176307
+Tran ID|Tran Date|Part Tran Num|Tran Type|Tran Sub Type|Part Tran Type|Init SOL|SOL|Amount|Tran Paerticular|Rmks|Rcre User|Pstd Date|instrmnt_num|module_id|fx_tran_amt|RATE_CODE|TRAN_CRNCY_CODE|REF_CRNCY_CODE|TRAN_PARTICULAR_2|TRAN_PARTICULAR_CODE|swift_rule|swift_flag|ref_rule|ref_flag|op_balance|line_op_balance|cl_balance|bic_code1|bic_code2|init_sol_desc|A/c Number|Value Date|acctOwnerrefNum|tag61line2|UAD_MODULE_KEY
+Closing_Balance|INR|164391782,88
