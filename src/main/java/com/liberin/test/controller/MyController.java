@@ -1,25 +1,34 @@
 package com.liberin.test.controller;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
-import com.fci.icoreparser.MT940Converter;
-import com.fci.icoreparser.entity.ICoreMessage;
-import com.fci.icoreparser.service.ParserServiceImpl;
-import com.fci.icoreparser.swiftfin.SwiftFinParser;
+import javax.sql.rowset.serial.SerialClob;
+import javax.sql.rowset.serial.SerialException;
 
-import org.apache.commons.lang3.time.StopWatch;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.codehaus.plexus.util.IOUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fci.icoreparser.MT940Converter;
+
 @RestController
 public class MyController {
     
+    @Autowired
+    TransactionsDao daolayer;
+
+
     @PostMapping("/mt940")
     public Map<String,Object> toHashMap(@RequestBody String text) {
         
@@ -30,41 +39,47 @@ public class MyController {
             System.out.println("writing");
             writer.write(answer.get("MT940 message").toString());
         } catch (Exception e) {
-            //TODO: handle exception
         }
         return answer;
     }
 
-    @GetMapping("/random")
-    public void random(){
+    @PostMapping("/train")
+    public void fillData(@RequestBody String text) throws SerialException, SQLException {
+        writeFiles();
+    }
+
+    void writeFiles() throws SerialException, SQLException {
+        List<File> filedirectory = Arrays.asList(new File("files\\18052022").listFiles());
+        
+        for (File file : filedirectory) {
+            try {
+                writeFile(file);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
+
+    }
+
+
+    void writeFile(File file) throws IOException, SerialException, SQLException {
 
         String text = "";
-        String file = "D:\\PROGRAMMING\\Liberin\\ICOREPARSER PROJECT\\icore-parser\\files\\Input files\\mt940_lst\\mt940_lst\\00470501559520220403.txt";
-
-        try {
-            text =new String(Files.readAllBytes(Paths.get(file)));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        System.out.println(file.getName());
+        text = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
+        Map<String, Object> map = MT940Converter.convertToMT940(text);
+        if (map.get("MT940 message") == null) {
+            System.out.println(map.get("error message").toString());
+            return;
         }
+        MT940Transactions transactions = new MT940Transactions();
+        transactions.setFilename(map.get("file name").toString());
+        transactions.setData(new SerialClob(map.get("MT940 message").toString().toCharArray()));
+        daolayer.save(transactions);   
 
-        StopWatch watch = new StopWatch();
-        watch.start();
-        ICoreMessage message = new ParserServiceImpl().createICoreMessage(text);
-        watch.stop();
-        System.out.println(message.getBody().size());
-        System.out.println(watch.getTime());
-
-        watch.reset();
-        watch.start();
-        String doc = new SwiftFinParser().createMT940Document(message);
-        watch.stop();
-        System.out.println("documented in "+ watch.getTime());
-
-        try (FileWriter writer = new FileWriter("random.swt1")) {
-            writer.write(text);
-        } catch (Exception e) {
-            //TODO: handle exception
-        }
+        
+        
     }
 }
+        
